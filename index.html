@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리미엄 MBTI 성향 검사</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-button {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4);
+        }
+
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(168, 85, 247, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .option-card {
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .option-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(168, 85, 247, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .option-card:active {
+            transform: translateY(0);
+        }
+
+        /* Ambient background lighting effects */
+        .bg-glow-1 {
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 102, 241, 0.15);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            bottom: 10%;
+            right: 15%;
+            width: 350px;
+            height: 350px;
+            background: rgba(236, 72, 153, 0.12);
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="relative flex items-center justify-center p-4 sm:p-6 overflow-x-hidden min-h-screen">
+
+    <!-- Ambient Glowing Background Effect -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-2xl relative z-10 my-auto">
+
+        <!-- ================= LANDING SCREEN ================= -->
+        <section id="landing-screen" class="glass-card rounded-3xl p-6 sm:p-10 text-center fade-in">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs sm:text-sm font-medium mb-6">
+                <i class="fa-solid fa-sparkles text-indigo-400"></i>
+                <span>정확하고 직관적인 나만의 성향 탐색</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                나를 더 깊이 이해하는 <br>
+                <span class="gradient-text">20가지 직관 질문</span>
+            </h1>
+
+            <p class="text-slate-300 text-sm sm:text-base mb-8 max-w-md mx-auto leading-relaxed">
+                복잡한 생각 없이 가장 끌리는 답을 선택해 보세요.<br>
+                나의 상세한 성향, 좋아하는 것과 싫어하는 것, 핵심 가치까지 심층 분석해 드립니다.
+            </p>
+
+            <!-- Test Feature Badges -->
+            <div class="grid grid-cols-3 gap-3 mb-8 text-left">
+                <div class="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/50 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-clock text-indigo-400 text-xl mb-1.5"></i>
+                    <span class="text-xs text-slate-400">소요 시간</span>
+                    <span class="text-sm font-semibold text-slate-200">약 2분</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/50 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-list-check text-purple-400 text-xl mb-1.5"></i>
+                    <span class="text-xs text-slate-400">총 문항</span>
+                    <span class="text-sm font-semibold text-slate-200">20 문항</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/50 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-brain text-pink-400 text-xl mb-1.5"></i>
+                    <span class="text-xs text-slate-400">결과 분석</span>
+                    <span class="text-sm font-semibold text-slate-200">심층 성향 리포트</span>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="gradient-button w-full py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-2 group cursor-pointer">
+                <span>검사 시작하기</span>
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </section>
+
+        <!-- ================= QUESTION SCREEN ================= -->
+        <section id="question-screen" class="glass-card rounded-3xl p-6 sm:p-10 hidden">
+            <!-- Header: Progress & Counter -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-3 text-xs sm:text-sm font-medium">
+                    <span class="text-indigo-300 font-semibold tracking-wide flex items-center gap-1.5">
+                        <i class="fa-solid fa-compass"></i> 질문 진행도
+                    </span>
+                    <span class="text-slate-400">
+                        <strong id="current-q-num" class="text-purple-400 font-bold text-base">1</strong> / 20
+                    </span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                    <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-300 w-[5%]"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div id="question-box" class="fade-in min-h-[140px] flex flex-col justify-center mb-8">
+                <span id="question-category" class="inline-block px-3 py-1 rounded-md bg-purple-500/10 text-purple-300 text-xs font-semibold w-fit mb-3 border border-purple-500/20">
+                    에너지 방향 (E / I)
+                </span>
+                <h2 id="question-text" class="text-xl sm:text-2xl font-bold text-slate-100 leading-snug">
+                    질문 내용이 여기에 들어갑니다.
+                </h2>
+            </div>
+
+            <!-- Options (A / B Choice) -->
+            <div class="space-y-4">
+                <button onclick="selectOption('A')" class="option-card w-full p-4 sm:p-5 rounded-2xl bg-slate-800/60 text-left flex items-start gap-4 group cursor-pointer">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold shrink-0 mt-0.5 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                        A
+                    </div>
+                    <span id="option-a-text" class="text-slate-200 text-sm sm:text-base font-medium leading-relaxed my-auto">
+                        선택지 A 내용
+                    </span>
+                </button>
+
+                <button onclick="selectOption('B')" class="option-card w-full p-4 sm:p-5 rounded-2xl bg-slate-800/60 text-left flex items-start gap-4 group cursor-pointer">
+                    <div class="w-8 h-8 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 flex items-center justify-center font-bold shrink-0 mt-0.5 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        B
+                    </div>
+                    <span id="option-b-text" class="text-slate-200 text-sm sm:text-base font-medium leading-relaxed my-auto">
+                        선택지 B 내용
+                    </span>
+                </button>
+            </div>
+
+            <!-- Prev Button -->
+            <div class="mt-8 flex justify-between items-center text-xs text-slate-400">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left"></i> 이전 질문
+                </button>
+                <span class="text-slate-500 text-xs">직관적으로 끌리는 답을 선택하세요</span>
+            </div>
+        </section>
+
+        <!-- ================= LOADING SCREEN ================= -->
+        <section id="loading-screen" class="glass-card rounded-3xl p-12 text-center hidden">
+            <div class="flex flex-col items-center justify-center py-8">
+                <div class="relative w-20 h-20 mb-6">
+                    <div class="absolute inset-0 rounded-full border-4 border-indigo-500/20"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-indigo-400">
+                        <i class="fa-solid fa-brain text-2xl animate-pulse"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-slate-100 mb-2">당신의 성향을 분석 중입니다</h3>
+                <p class="text-slate-400 text-sm">20개 응답을 바탕으로 심층 리포트를 생성하고 있어요...</p>
+            </div>
+        </section>
+
+        <!-- ================= RESULT SCREEN ================= -->
+        <section id="result-screen" class="glass-card rounded-3xl p-6 sm:p-10 hidden fade-in">
+            <div class="text-center mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold mb-3 border border-indigo-500/30">
+                    상세 성향 분석 리포트
+                </span>
+                <h3 class="text-slate-300 text-sm mb-1">당신의 MBTI 성향 유형은</h3>
+                <h1 id="result-mbti" class="text-5xl sm:text-6xl font-black gradient-text tracking-wider my-2">
+                    ENFP
+                </h1>
+                <p id="result-title" class="text-xl sm:text-2xl font-bold text-slate-100 mb-2">
+                    재발견을 즐기는 열정적인 창의가
+                </p>
+                <p id="result-subtitle" class="text-slate-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+                    상세 설명 요약이 들어갑니다.
+                </p>
+            </div>
+
+            <!-- Personality Trait Progress Bars -->
+            <div class="bg-slate-800/50 rounded-2xl p-5 mb-6 border border-slate-700/50 space-y-4">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">성향 지표 분석</h4>
+                
+                <!-- E vs I -->
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span id="score-e-label" class="text-indigo-400">외향형 (E) 0%</span>
+                        <span id="score-i-label" class="text-purple-400">내향형 (I) 0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden flex">
+                        <div id="bar-e" class="h-full bg-indigo-500 transition-all duration-500" style="width: 50%;"></div>
+                        <div id="bar-i" class="h-full bg-purple-500 transition-all duration-500" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <!-- S vs N -->
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span id="score-s-label" class="text-indigo-400">감각형 (S) 0%</span>
+                        <span id="score-n-label" class="text-purple-400">직관형 (N) 0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden flex">
+                        <div id="bar-s" class="h-full bg-indigo-500 transition-all duration-500" style="width: 50%;"></div>
+                        <div id="bar-n" class="h-full bg-purple-500 transition-all duration-500" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <!-- T vs F -->
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span id="score-t-label" class="text-indigo-400">사고형 (T) 0%</span>
+                        <span id="score-f-label" class="text-purple-400">감정이입형 (F) 0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden flex">
+                        <div id="bar-t" class="h-full bg-indigo-500 transition-all duration-500" style="width: 50%;"></div>
+                        <div id="bar-f" class="h-full bg-purple-500 transition-all duration-500" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <!-- J vs P -->
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span id="score-j-label" class="text-indigo-400">판단형 (J) 0%</span>
+                        <span id="score-p-label" class="text-purple-400">인식형 (P) 0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden flex">
+                        <div id="bar-j" class="h-full bg-indigo-500 transition-all duration-500" style="width: 50%;"></div>
+                        <div id="bar-p" class="h-full bg-purple-500 transition-all duration-500" style="width: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Detailed Character Sections -->
+            <div class="space-y-4 mb-8">
+                <!-- 1. Detailed Description -->
+                <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
+                    <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-user-gear"></i> 성향 심층 분석
+                    </h4>
+                    <p id="result-desc" class="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                        상세 성향 분석 내용이 여기에 표시됩니다.
+                    </p>
+                </div>
+
+                <!-- 2. Core Values -->
+                <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
+                    <h4 class="text-sm font-bold text-amber-300 flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-gem"></i> 소중히 여기는 핵심 가치
+                    </h4>
+                    <p id="result-values" class="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                        소중히 여기는 가치 내용이 표시됩니다.
+                    </p>
+                </div>
+
+                <!-- 3. Likes & Dislikes Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Likes -->
+                    <div class="bg-emerald-950/20 rounded-2xl p-5 border border-emerald-500/20">
+                        <h4 class="text-sm font-bold text-emerald-400 flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-heart"></i> 좋아하는 것 (Likes)
+                        </h4>
+                        <ul id="result-likes" class="text-slate-300 text-xs sm:text-sm space-y-2 list-disc list-inside leading-relaxed">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+
+                    <!-- Dislikes -->
+                    <div class="bg-rose-950/20 rounded-2xl p-5 border border-rose-500/20">
+                        <h4 class="text-sm font-bold text-rose-400 flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-circle-xmark"></i> 싫어하는 것 (Dislikes)
+                        </h4>
+                        <ul id="result-dislikes" class="text-slate-300 text-xs sm:text-sm space-y-2 list-disc list-inside leading-relaxed">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. Strengths & Communication -->
+                <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
+                    <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-comments"></i> 추천 소통 방식 및 핵심 역량
+                    </h4>
+                    <p id="result-comm" class="text-slate-300 text-sm leading-relaxed whitespace-pre-line mb-3">
+                        소통 방식 안내가 표시됩니다.
+                    </p>
+                    <div id="result-strengths" class="flex flex-wrap gap-2 pt-2 border-t border-slate-700/40">
+                        <!-- Badges added dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="flex justify-center">
+                <button onclick="restartQuiz()" class="w-full sm:w-auto px-8 gradient-button py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>다시 검사하기</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- App Logic Script -->
+    <script>
+        // ================= 20 QUESTIONS DATABASE =================
+        const questions = [
+            // E vs I (5 Questions)
+            {
+                type: 'EI',
+                category: '에너지 방향',
+                question: '에너지를 충전하고 기분을 환기할 때 당신의 선택은?',
+                a: '지인들과 만나서 이야기 나누거나 활발하게 외출한다.',
+                b: '혼자만의 정돈된 공간에서 고요하게 여유를 즐긴다.'
+            },
+            {
+                type: 'EI',
+                category: '에너지 방향',
+                question: '새로운 모임에 참여했을 때 나의 자연스러운 행동은?',
+                a: '먼저 다가가 밝게 인사를 건네고 말을 트는 편이다.',
+                b: '상대방이 먼저 말을 걸어주거나 분위기가 풀릴 때까지 관찰한다.'
+            },
+            {
+                type: 'EI',
+                category: '에너지 방향',
+                question: '생각이나 아이디어를 구체화할 때 선호하는 방법은?',
+                a: '누군가와 대화하고 말로 나누면서 생각을 정리한다.',
+                b: '속으로 충분히 숙고하고 글로 쓰거나 혼자 정리한다.'
+            },
+            {
+                type: 'EI',
+                category: '에너지 방향',
+                question: '주말 내내 집에 혼자만 머물러 있다면 드는 느낌은?',
+                a: '몸이 간지럽고 답답해서 바깥 공기를 쐬고 싶어진다.',
+                b: '마음이 평화롭고 충전되는 최고의 시간을 보낸다.'
+            },
+            {
+                type: 'EI',
+                category: '에너지 방향',
+                question: '다수와의 그룹 대화 상황에서 당신의 모습은?',
+                a: '주도적으로 내 이야기와 의사를 활발히 전달한다.',
+                b: '대개 경청하며 꼭 필요한 순간에만 내 생각을 더한다.'
+            },
+
+            // S vs N (5 Questions)
+            {
+                type: 'SN',
+                category: '인식 기능',
+                question: '새로운 정보를 대하거나 업무를 파악할 때 더 중시하는 것은?',
+                a: '눈에 보이는 구체적인 사실과 정확한 수치, 데이터.',
+                b: '전체적인 맥락, 숨겨진 의미와 미래의 가능성.'
+            },
+            {
+                type: 'SN',
+                category: '인식 기능',
+                question: '설명서나 지침이 필요한 일을 시작할 때 당신의 스타일은?',
+                a: '매뉴얼의 단계와 가이드를 정확하게 따라서 수행한다.',
+                b: '전체 감을 잡은 뒤 나만의 창의적인 방식으로 시도한다.'
+            },
+            {
+                type: 'SN',
+                category: '인식 기능',
+                question: '영화나 소설을 볼 때 몰입하게 되는 포인트는?',
+                a: '현실감 넘치는 개연성, 섬세한 묘사와 실제 사건 같은 전개.',
+                b: '독창적인 세계관, 상징적인 비유와 예상치 못한 복선.'
+            },
+            {
+                type: 'SN',
+                category: '인식 기능',
+                question: '‘사과’라는 단어를 들었을 때 머릿속에 즉시 떠오르는 것은?',
+                a: '빨갛다, 달콤하다, 아침 사과는 보약 등 실체적인 특징.',
+                b: '스티브 잡스, 뉴턴의 중력, 백설공주 등 확장된 개념.'
+            },
+            {
+                type: 'SN',
+                category: '인식 기능',
+                question: '미래에 대해 상상하거나 계획할 때 당신은?',
+                a: '당장 이번 달, 올해 다가올 현실적 문제에 주목한다.',
+                b: '몇 년 뒤 내 모습이나 먼 미래의 유토피아적 이상을 그린 구상.'
+            },
+
+            // T vs F (5 Questions)
+            {
+                type: 'TF',
+                category: '판단 기능',
+                question: '친구가 "나 너무 힘들어서 쇼핑했어"라고 말할 때 첫 반응은?',
+                a: '"무슨 문제 있어? 쇼핑에서 뭐 샀는데?" (이유와 해결 집중)',
+                b: '"많이 힘들었구나... 기분은 좀 풀렸어?" (감정 위로 집중)'
+            },
+            {
+                type: 'TF',
+                category: '판단 기능',
+                question: '중요한 결정을 내릴 때 최우선으로 고려하는 기준은?',
+                a: '객관적인 사실, 논리적 타당성, 원칙과 효율성.',
+                b: '주변 사람들의 기분, 관계의 조화, 인간적인 가치.'
+            },
+            {
+                type: 'TF',
+                category: '판단 기능',
+                question: '누군가에게 피드백을 주어야 하는 상황에서 당신은?',
+                a: '개선에 직결되는 핵심 문제점과 사실을 솔직히 말한다.',
+                b: '상대방의 마음이 상하지 않도록 따뜻하고 부드럽게 표현한다.'
+            },
+            {
+                type: 'TF',
+                category: '판단 기능',
+                question: '의견 충돌이 생겼을 때 더 기분 좋게 느껴지는 결말은?',
+                a: '누가 옳고 그른지 논리적으로 규명되어 명확해지는 것.',
+                b: '모두가 서로를 이해하고 감정적 상처 없이 합의를 이루는 것.'
+            },
+            {
+                type: 'TF',
+                category: '판단 기능',
+                question: '칭찬을 들었을 때 훨씬 더 뿌듯한 말은?',
+                a: '"너 정말 능력 있고 일을 똑똑하게 잘 처리한다!"',
+                b: '"너는 정말 따뜻하고 배려심 깊은 최고의 친구야!"'
+            },
+
+            // J vs P (5 Questions)
+            {
+                type: 'JP',
+                category: '이행 양식',
+                question: '여행을 계획할 때 당신의 스타일은?',
+                a: '시간대별 이동 동선, 맛집, 예약 정보를 미리 꼼꼼히 짠다.',
+                b: '주요 위치만 파악하고 그날 기분에 따라 유연하게 움직인다.'
+            },
+            {
+                type: 'JP',
+                category: '이행 양식',
+                question: '마감일이 정해진 업무나 과제를 처리할 때?',
+                a: '일정을 잘게 나누어 며칠 전부터 미리 차근차근 완성한다.',
+                b: '마감 직전 폭발적인 몰입감을 발휘하여 임박해서 마무리한다.'
+            },
+            {
+                type: 'JP',
+                category: '이행 양식',
+                question: '갑작스럽게 일정이나 약속이 변경되는 상황에서 당신은?',
+                a: '계획이 흐트러져 약간의 불편함과 스트레스를 느낀다.',
+                b: '새로운 대안을 찾거나 여유가 생긴 것에 대해 쉽게 적응한다.'
+            },
+            {
+                type: 'JP',
+                category: '이행 양식',
+                question: '당신의 책상이나 개인 방의 정돈 상태는?',
+                a: '모든 물건이 제자리에 정돈되어 있어야 마음이 편안하다.',
+                b: '약간 흐트러져 있어도 내가 물건을 찾기만 쉬우면 상관없다.'
+            },
+            {
+                type: 'JP',
+                category: '이행 양식',
+                question: '하루를 보낼 때 더 선호하는 방식은?',
+                a: '오늘 할 일 목록(To-Do List)을 체크하며 체계적으로 진행.',
+                b: '그때그때 마주치는 상황과 흥미에 따라 유연하게 진행.'
+            }
+        ];
+
+        // ================= DETAILED MBTI RESULTS DATABASE =================
+        const mbtiResults = {
+            'ISTJ': {
+                title: '원칙을 지키는 청렴결백한 조직가',
+                subtitle: '신중하고 책임감이 뛰어나며, 검증된 사실에 기반해 체계적으로 과업을 수행합니다.',
+                desc: `ISTJ는 한 번 맡은 일은 끝까지 책임지는 가장 신뢰할 수 있는 타입입니다. 신중하고 침착하며, 모호한 감정이나 주관적인 짐작보다는 정확한 데이터와 명확한 수치에 근거해 판단합니다.
+조직의 규칙과 질서를 존중하고 전통적인 방식의 효율성을 신뢰하며, 소란스럽지 않게 묵묵히 자신의 역할을 해냅니다. 약속과 기한을 엄수하며 스스로에게도 매우 엄격한 기율을 적용하는 현실주의자입니다.`,
+                values: `• 신뢰와 성실성 (Promises & Integrity)\n• 체계와 질서 및 명확한 원칙 (Order & Rules)\n• 검증된 사실과 경험 (Proven Facts & Stability)`,
+                likes: [
+                    '명확한 규칙과 정돈된 환경',
+                    '구체적이고 현실적인 가이드라인',
+                    '기한과 약속을 철저히 지키는 사람',
+                    '혼자 조용히 집중할 수 있는 업무 공간'
+                ],
+                dislikes: [
+                    '갑작스럽고 무계획적인 일정 변경',
+                    '근거 없는 막연한 주장에 의한 의사결정',
+                    '책임감이 없고 건성으로 대하는 태도',
+                    '과도하게 감정적이거나 무질서한 분위기'
+                ],
+                comm: `ISTJ에게는 돌려 말하기보다 원하는 바를 명확하고 논리적인 언어로 전달하는 것이 좋습니다. 객관적인 데이터와 구체적인 기한을 제시하면 최고의 성과로 답해줍니다.`,
+                strengths: ['높은 책임감', '철저한 계획성', '침착한 현실감각', '약속 엄수']
+            },
+            'ISFJ': {
+                title: '소중한 이들을 지키는 헌신적인 수호자',
+                subtitle: '온화하고 섬세하며, 주변 사람들의 요구를 민감하게 보살피는 따뜻한 보조자입니다.',
+                desc: `ISFJ는 타인의 감정과 뉘앙스를 세심하게 캐치하고 배려하는 온화한 성품을 지녔습니다. 자신이 드러나는 자리를 찾아 탐내지 않지만, 뒷전에서 타인이 편안할 수 있도록 조용히 다방면으로 지원합니다.
+자신의 의무를 묵묵히 다하며, 굳건한 참을성과 타인에 대한 충성심이 돋보입니다. 기억력이 뛰어난 특성이 있어 사람들의 작은 행동이나 좋아하는 것들을 잊지 않고 기억합니다.`,
+                values: `• 따뜻한 배려와 조화로운 관계 (Care & Harmony)\n• 안정감과 충성심 (Security & Loyalty)\n• 타인을 돕는 헌신 (Dedication & Service)`,
+                likes: [
+                    '감사를 표하는 다정한 말 한마디',
+                    '안정적이고 예측 가능한 다정한 분위기',
+                    '차분하게 소통하는 따뜻한 사람들',
+                    '남들에게 실질적인 도움을 주는 일'
+                ],
+                dislikes: [
+                    '이유 없이 무례하거나 배려가 없는 행동',
+                    '갈등이 폭발하는 긴장된 대립 상황',
+                    '자신의 헌신을 당연하게 여기는 태도',
+                    '무리하게 타인 앞에 나서는 스포트라이트'
+                ],
+                comm: `ISFJ의 노고와 세심한 배려에 진심 어린 감사를 정기적으로 표현해 주세요. 비판해야 할 때도 비난이 아닌 따뜻한 위로와 함께 건네는 것이 마음을 엽니다.`,
+                strengths: ['세심한 보살핌', '높은 성실성', '뛰어난 경청력', '조용한 헌신']
+            },
+            'INFJ': {
+                title: '통찰력으로 세상을 밝히는 이상주의가',
+                subtitle: '깊은 통찰력과 이상적인 확신을 바탕으로 세상에 긍정적인 영향을 미칩니다.',
+                desc: `INFJ는 전 세계에서 가장 희귀한 유형 중 하나로, 사람과 세상에 대한 깊은 내면의 통찰을 품고 있습니다. 표면적인 현상 너머의 숨겨진 의미와 동기를 본능적으로 읽어내는 직관력이 뛰어납니다.
+겉으로는 조용하고 수줍어 보일 수 있지만, 스스로 확신하는 진실과 이상 앞에서는 타협하지 않는 강인한 신념을 발휘합니다. 사람들의 진정한 성장을 진심으로 돕고자 하는 사명감을 품고 살아갑니다.`,
+                values: `• 진정성과 깊이 있는 의미 (Authenticity & Meaning)\n• 세상을 이롭게 하는 이상 (Vision & Goodness)\n• 타인과의 진실한 영혼적 연결 (Deep Connection)`,
+                likes: [
+                    '가벼운 잡담 대신 깊이 있는 대화',
+                    '자신의 가치관과 부합하는 의미 있는 프로젝트',
+                    '조용하고 평화로운 사색의 시간',
+                    '진정성을 공유할 수 있는 소수의 깊은 관계'
+                ],
+                dislikes: [
+                    '가식적이거나 겉치레만 번지르르한 태도',
+                    '물질적인 이익만을 좇는 이기적인 분위기',
+                    '자신의 사생활을 침해당하는 경험',
+                    '의미 없는 원칙만을 강요하는 환경'
+                ],
+                comm: `INFJ에게는 표면적인 대화보다는 진솔한 감정과 비전을 나누세요. 이들의 통찰을 경청하고 혼자만의 시간을 가질 수 있도록 존중해 주는 것이 핵심입니다.`,
+                strengths: ['깊은 통찰력', '강한 신념', '진정성 있는 공감', '원대한 비전']
+            },
+            'INTJ': {
+                title: '전체 판을 설계하는 대담한 전략가',
+                subtitle: '원대한 비전과 객관적 논리로 최적의 시스템과 전략을 창조해냅니다.',
+                desc: `INTJ는 명철한 이성과 끊임없는 지적 호기심으로 전체적인 그림과 먼 미래의 가능성을 설계합니다. 비효율성과 헛점을 누구보다 빠르게 포착하며, 이를 개선할 자신만의 철저한 전략을 세웁니다.
+독립심이 매우 강하고 타인의 평가에 연연하지 않으며, 스스로 선정한 높은 기준을 달성하기 위해 끊임없이 몰입합니다. 복잡한 문제를 단순하고 명확하게 구조화하는 최고의 전략가입니다.`,
+                values: `• 지적 독립성과 자율성 (Autonomy & Mastery)\n• 논리적 효율성과 시스템 개선 (Logic & Optimization)\n• 장기적 관점의 비전 (Long-term Vision)`,
+                likes: [
+                    '지적으로 자극이 되는 깊이 있는 토론',
+                    '스스로 목표를 설정하고 재량껏 일할 자율성',
+                    '비효율을 단번에 해결하는 깔끔한 시스템',
+                    '높은 수준의 전문성을 지닌 동료'
+                ],
+                dislikes: [
+                    '비논리적이고 감정만 앞선 비합리적 주장',
+                    '근거 없는 관습을 그대로 따르라는 강요',
+                    '사소한 일에 대한 과도한 세부 간섭(마이크로매니징)',
+                    '비효율적이고 비생산적인 통과의례'
+                ],
+                comm: `INTJ에게는 감정적인 어필보다 명확한 논리, 근거, 결론 위주로 간단명료하게 대화하세요. 그들의 자율성을 존중할 때 최고의 역량이 발휘됩니다.`,
+                strengths: ['전략적 사고', '논리적 문제해결', '강한 자율성', '높은 목표의식']
+            },
+            'ISTP': {
+                title: '위기에 강한 실용적인 만능 재주꾼',
+                subtitle: '냉철한 이성과 신속한 상황 판단으로 실질적인 문제를 빠르게 해결합니다.',
+                desc: `ISTP는 관찰력이 매우 뛰어나며 상황이 어떻게 작동하는지 원리를 파악하는 것에 흥미를 느낍니다. 말이 적고 조용해 보이지만 필요한 순간 놀라운 집중력과 순발력으로 문제를 처리합니다.
+긴급한 위기 상황에서도 당황하지 않고 냉정하게 우선순위를 매겨 대처합니다. 복잡한 이론보다는 눈앞의 실질적인 결과를 중시하며, 자신만의 자유와 독립성을 최우선으로 여깁니다.`,
+                values: `• 개인의 자유와 독립 (Freedom & Independence)\n• 효율성과 문제의 실질적 해결 (Practical Efficiency)\n• 유연한 적응력 (Adaptability)`,
+                likes: [
+                    '혼자 자유롭게 몰입할 수 있는 개별 과제',
+                    '직접 손으로 만지고 체험하는 실용적 경험',
+                    '필요한 말만 오가는 깔끔한 소통',
+                    '돌발 상황에서의 즉각적 문제 해결'
+                ],
+                dislikes: [
+                    '구구절절 길어지는 감정적인 하소연',
+                    '불필요한 규칙으로 개인을 억압하는 환경',
+                    '단순 반복적이고 융통성 없는 일상 업무',
+                    '사생활에 대해 과도하게 꼬치꼬치 묻는 행동'
+                ],
+                comm: `ISTP에게는 사설을 빼고 직관적인 핵심만 간결하게 전달하세요. 그들의 독립된 공간과 판단에 간섭하지 않을 때 최상의 협력 관계가 형성됩니다.`,
+                strengths: ['탁월한 위기관리', '냉철한 판단력', '실용적 문제해결', '유연한 적응']
+            },
+            'ISFP': {
+                title: '현재를 만끽하는 온화한 감성 예술가',
+                subtitle: '따뜻한 마음과 예술적 감수성으로 삶의 순간순간을 다채롭게 채워나갑니다.',
+                desc: `ISFP는 다정하고 겸손하며 자신만의 독창적인 감성과 미적 감각을 품고 살아갑니다. 타인을 판단하거나 통제하려 하지 않고 상대방의 있는 그대로의 모습을 수용해 주는 포용력이 돋보입니다.
+미래에 대한 거창한 걱정보다는 '지금 이 순간'의 평화와 아름다움을 가치 있게 여깁니다. 조용하지만 내면에는 강한 열정과 온화한 배려심이 공존하는 감성파입니다.`,
+                values: `• 내면의 평화와 자유 (Peace & Flexibility)\n• 자신만의 미적 감각과 개인적 가치 (Aesthetic & Self-expression)\n• 타인에 대한 따뜻한 수용 (Warm Acceptance)`,
+                likes: [
+                    '자연, 음악, 예술 등 감성을 자극하는 요소',
+                    '부담이나 강요 없는 편안한 공간',
+                    '자신의 가치관을 존중해 주는 다정한 사람',
+                    '즉흥적으로 떠나는 여유로운 나들이'
+                ],
+                dislikes: [
+                    '엄격한 규칙과 긴장감이 팽팽한 환경',
+                    '갈등을 유발하는 지적과 비판적 언어',
+                    '남들에게 지나치게 경쟁을 강요당하는 순간',
+                    '타인의 삶에 이래라저래라 간섭하는 태도'
+                ],
+                comm: `ISFP에게는 강압적이거나 지시조의 언어를 피하고 부드럽고 따뜻하게 다가가세요. 그들의 기분과 개인적인 속도를 인정해 주는 포용력이 필요합니다.`,
+                strengths: ['따뜻한 포용력', '뛰어난 감수성', '겸손함과 배려', '유연한 태도']
+            },
+            'INFP': {
+                title: '이상적인 세상을 그리는 따뜻한 중재자',
+                subtitle: '풍부한 공감 능력과 이상을 바탕으로 세상에 진정성 있는 온기를 더합니다.',
+                desc: `INFP는 자신의 깊은 내면 가치관과 신념에 따라 삶을 살아가는 진정성 있는 타입입니다. 타인의 슬픔과 기쁨에 깊이 동화되는 뛰어난 공감 능력과 풍부한 상상력을 가지고 있습니다.
+겉으로는 수줍고 조용해 보이지만, 마음속에는 따뜻한 인류애와 깊은 열정이 넘쳐납니다. 타인의 진정한 가능성을 믿어주며, 세상이 조금 더 따뜻하고 의미 있기를 진심으로 바랍니다.`,
+                values: `• 진정성과 내면의 신념 (Authenticity & Integrity)\n• 타인과의 깊은 공감 (Empathy & Harmony)\n• 개인의 독창적인 가치 (Uniqueness & Creativity)`,
+                likes: [
+                    '나의 가치관과 이상을 공유하는 깊은 대화',
+                    '창의성을 마음껏 발휘할 수 있는 환경',
+                    '타인의 성장을 돕고 용기를 주는 일',
+                    '조용한 혼자만의 생각 정리 시간'
+                ],
+                dislikes: [
+                    '비판과 지적만이 가득한 냉정한 분위기',
+                    '자신의 소중한 신념이나 가치가 무시당할 때',
+                    '속물적이거나 상업성에만 집착하는 행동',
+                    '융통성 없는 규율에 가두려는 압박'
+                ],
+                comm: `INFP의 감정과 이상을 가볍게 여기지 말고 진심으로 경청해 주세요. 그들의 진정성을 인정하고 따뜻한 어조로 응원할 때 깊은 신뢰가 싹틉니다.`,
+                strengths: ['풍부한 공감', '창의적 상상력', '진정성 있는 태도', '깊은 가치관']
+            },
+            'INTP': {
+                title: '원리를 탐구하는 독창적인 아이디어 사색가',
+                subtitle: '호기심과 냉철한 논리로 세상의 원리를 파헤치고 새로운 개념을 정립합니다.',
+                desc: `INTP는 지적 호기심의 화신으로, 복잡한 사물의 원리나 가설을 분석하고 체계화하는 사색에 빠지는 것을 좋아합니다. 기존 관습에 의문을 제기하며 비판적이고 다각적인 시각으로 문제를 바라봅니다.
+잡담이나 표면적인 규칙에는 관심이 적지만, 흥미로운 주제를 만나면 끝없는 탐구열을 발휘합니다. 독창적인 아이디어와 정밀한 논리로 세상을 해석하는 현대의 철학자입니다.`,
+                values: `• 진리 탐구와 지적 성찰 (Truth & Intellectual Curiosity)\n• 논리적 엄밀함 (Logical Rigor)\n• 자율적인 생각의 자유 (Thought Freedom)`,
+                likes: [
+                    '지적 호기심을 자극하는 새로운 토론과 이론',
+                    '혼자 생각에 몰두할 수 있는 독립된 시간',
+                    '기발하고 독창적인 문제를 해결하는 과정',
+                    '논리적으로 명쾌한 설명과 분석'
+                ],
+                dislikes: [
+                    '비논리적이고 감정에 호소하는 주장',
+                    '단순 암기나 무의미하게 반복되는 일상',
+                    '인간관계에서의 비효율적인 눈치 싸움',
+                    '생각을 제한하는 상명하부식 조직 문화'
+                ],
+                comm: `INTP와는 흥미로운 가설이나 아이디어를 바탕으로 논리적인 대화를 나누세요. 감정적 반응보다는 질문과 논리적 이의 제기를 반갑게 받아들입니다.`,
+                strengths: ['독창적 아이디어', '객관적 분석력', '넓은 사고력', '문제 원리 파악']
+            },
+            'ESTP': {
+                title: '에너지가 넘치는 현장 중심의 모험가',
+                subtitle: '명쾌한 결단력과 대담한 행동으로 현장의 문제를 누구보다 빠르게 해결합니다.',
+                desc: `ESTP는 에너지가 넘치고 관찰력이 뛰어나 주변 상황의 변화를 순식간에 포착합니다. 긴 설명이나 고민보다는 일단 직접 행동으로 옮겨 경험하면서 수정해 나가는 스타일입니다.
+사교성이 우수하며 재치 있는 입담으로 사람들의 주목을 받습니다. 복잡하게 꼬인 문제 현장에 직접 뛰어들어 뛰어난 순발력과 대담함으로 합리적인 결과를 만들어냅니다.`,
+                values: `• 즉각적인 행동과 실질적 성과 (Action & Results)\n• 자유롭고 스릴 있는 경험 (Thrill & Dynamism)\n• 직관적인 명쾌함 (Pragmatism)`,
+                likes: [
+                    '몸으로 직접 부딪히는 다이내믹한 활동',
+                    '즉각적인 성과가 눈에 보이는 과제',
+                    '솔직하고 화끈하게 나눌 수 있는 대화',
+                    '새로운 도전과 흥미진진한 이벤트'
+                ],
+                dislikes: [
+                    '이론만 장황하고 결론이 없는 길고 긴 회의',
+                    '행동을 제한하는 지나치게 복잡한 절차',
+                    '지루하게 오래 대기해야 하는 상황',
+                    '돌려 말하는 유연하지 못한 소통'
+                ],
+                comm: `ESTP에게는 긴 서론 없이 결론부터 명쾌하게 행동 위주로 전달하세요. 함께 직관적인 행동을 보여줄 때 가장 열정적으로 반응합니다.`,
+                strengths: ['뛰어난 순발력', '대담한 추진력', '현장 적응력', '재치와 사교성']
+            },
+            'ESFP': {
+                title: '세상을 밝히는 자유로운 영혼의 연예인',
+                subtitle: '특유의 긍정적인 에너지와 센스로 사람들에게 즐거움과 생기를 불어넣습니다.',
+                desc: `ESFP는 어디서나 사람들의 중심이 되는 분위기 메이커입니다. 삶이 주는 즐거움과 감각적인 경험을 만끽하며, 주변 사람들에게 활력과 웃음을 선사하는 데 뛰어난 재능이 있습니다.
+공감 능력이 좋고 다정하며 실질적인 도움을 제공하려 노력합니다. 순간의 행복을 매우 소중히 여기며 따뜻하고 쾌활한 분위기를 만들어내는 긍정의 아이콘입니다.`,
+                values: `• 현재의 즐거움과 조화 (Joy & Positivity)\n• 사람들과의 따뜻한 연결 (Human Warmth)\n• 감각적인 경험과 유쾌함 (Vitality)`,
+                likes: [
+                    '사람들과 웃고 즐기는 신나는 모임',
+                    '화려하고 감각적인 문화 및 예술 활동',
+                    '자신의 밝은 모습을 인정해 주는 찬사',
+                    '즉흥적이고 흥미진진한 새로운 경험'
+                ],
+                dislikes: [
+                    '지나치게 진지하고 어두운 분위기',
+                    '혼자 오랫동안 고립되어 일해야 하는 환경',
+                    '이론적인 공식이나 빽빽한 데이터 분석',
+                    '자신의 행동을 하나하나 통제하려는 시도'
+                ],
+                comm: `ESFP에게는 칭찬과 긍정적인 표현을 아끼지 마세요. 분위기를 밝고 즐겁게 유도하며, 감각적인 재미를 공유하는 소통이 가장 효과적입니다.`,
+                strengths: ['밝은 에너지', '뛰어난 친화력', '공감과 분위기 반전', '현실적 감각']
+            },
+            'ENFP': {
+                title: '열정으로 아이디어를 펼치는 열정가',
+                subtitle: '풍부한 상상력과 사교성으로 새로운 가능성을 지속적으로 발견하고 추진합니다.',
+                desc: `ENFP는 열정과 창의력이 샘솟는 에너자이저입니다. 사물과 사람 사이의 끊임없는 가능성을 발견하며, 기발한 아이디어로 주변 사람들에게 감동과 영감을 줍니다.
+새로운 도전과 변화를 두려워하지 않고 열린 마음으로 사람들을 만납니다. 따뜻한 공감 능력과 대중을 이끄는 매력적인 표현력으로 조직에 활력을 불어넣는 창의가입니다.`,
+                values: `• 무한한 가능성과 자유 (Possibility & Freedom)\n• 진정성 있는 인간관계 (Sincere Connection)\n• 창의적인 자아실현 (Creativity & Inspiration)`,
+                likes: [
+                    '브레인스토밍과 새로운 아이디어 제시',
+                    '다양한 배경을 가진 사람들과의 교류',
+                    '자신의 열정을 마음껏 펼칠 자율적 환경',
+                    '새롭고 영감을 주는 독창적인 프로젝트'
+                ],
+                dislikes: [
+                    '반복적이고 상상력을 제한하는 연례적인 일',
+                    '타인의 감정을 냉정하게 무시하는 언행',
+                    '틀에 박힌 규칙으로 행동을 제약받을 때',
+                    '가능성을 단칼에 일축하는 부정적 태도'
+                ],
+                comm: `ENFP의 아이디어와 열정에 긍정적으로 호응해 주세요! 삭막한 비판보다는 가능성에 함께 흥분해 주고 자유를 부여할 때 놀라운 결과를 만듭니다.`,
+                strengths: ['창의적 아이디어', '풍부한 열정', '뛰어난 공감 능력', '긍정적 영감']
+            },
+            'ENTP': {
+                title: '지적 도전을 즐기는 뜨거운 변론가',
+                subtitle: '풍부한 두뇌 회전과 기발한 시각으로 기존의 틀을 깨는 변화를 주도합니다.',
+                desc: `ENTP는 지적인 모험을 두려워하지 않는 대담한 아이디어 창출가입니다. 통념과 관습에 끊임없이 의문을 제기하며, 기발하고 위트 있는 시각으로 고정관념을 뒤흔듭니다.
+솔직하고 명쾌하며 비판적인 사고를 즐깁니다. 어떤 복잡한 문제 상황에서도 민첩한 두뇌 회전으로 허점을 찾아내고 독창적인 해결책을 제안하는 지적 도전자입니다.`,
+                values: `• 혁신과 지적 도전 (Innovation & Challenge)\n• 사고의 자유와 독립성 (Freedom of Thought)\n• 명쾌한 아이디어의 창출 (Ingenuity)`,
+                likes: [
+                    '치열하고 위트 있는 지적 토론',
+                    '새로운 솔루션을 기획하고 론칭하는 과제',
+                    '규칙을 깨고 효율을 극대화하는 혁신',
+                    '자신의 지적 능력과 아이디어를 인정받는 것'
+                ],
+                dislikes: [
+                    '비논리적인 유교적 권위주의나 강요',
+                    '세부적인 단순 루틴 업무의 반복',
+                    '새로운 아이디어를 무조건 거부하는 보수적 태도',
+                    '감정적으로 삐치거나 소통을 닫아버리는 행동'
+                ],
+                comm: `ENTP에게는 반론과 질문을 두려워하지 말고 유연하고 위트 있게 대화하세요. 그들의 지적 도전을 논리적으로 받아칠 때 깊은 매력을 느낍니다.`,
+                strengths: ['민첩한 두뇌회전', '혁신적 아이디어', '위트와 설득력', '독창적 문제해결']
+            },
+            'ESTJ': {
+                title: '질서를 구축하는 엄격한 리더',
+                subtitle: '명확한 목표와 추진력으로 조직을 효율적으로 이끄는 리더십의 정석입니다.',
+                desc: `ESTJ는 현실적이고 목표 지향적이며 질서와 체계를 명확히 구축하는 리더입니다. 판단이 신속하고 공정하며, 맡은 일에 대해 누구보다 탁월한 실천력을 발휘합니다.
+정직함과 원칙을 최우선으로 여기며, 모호함 없이 명확한 결과물을 도출해 냅니다. 효율적인 계획 수립과 사람/물자 배치를 통해 조직을 성공으로 견인하는 확실한 관리자입니다.`,
+                values: `• 공정한 원칙과 질서 (Rules & Structure)\n• 확실한 목표 달성과 효율 (Results & Efficiency)\n• 정직함과 강한 책임감 (Honesty & Responsibility)`,
+                likes: [
+                    '명확한 체계와 역할 분담이 된 조직',
+                    '약속된 기한 내에 완벽히 달성하는 성과',
+                    '솔직하고 깔끔하며 단도직입적인 대화',
+                    '체계적인 계획 수립과 이행'
+                ],
+                dislikes: [
+                    '무책임하고 시간 약속을 어기는 행위',
+                    '체계 없이 감정적으로 일을 처리하는 상황',
+                    '지시나 방침에 이유 없이 불복종하거나 빈둥거림',
+                    '결론이 없이 지루하게 늘어지는 과정'
+                ],
+                comm: `ESTJ에게는 감정적 호소보다 명확한 사실과 결과를 바탕으로 단도직입적으로 보고하세요. 그들의 지도력을 인정하고 원칙을 지키는 모습이 필요합니다.`,
+                strengths: ['강한 리더십', '탁월한 조직력', '확실한 실행력', '공정한 원칙']
+            },
+            'ESFJ': {
+                title: '협력을 도모하는 사교적인 분위기 리더',
+                subtitle: '친절함과 책임감으로 조직의 화합을 이끌고 사람들을 따뜻하게 아우릅니다.',
+                desc: `ESFJ는 정이 많고 사교성이 뛰어나며 조직 내의 화합과 인간관계를 매우 소중하게 여깁니다. 주변 사람들의 필요와 감정을 세심하게 챙기며 다정한 배려를 베풉니다.
+조직의 규칙과 질서를 잘 준수하고, 집단의 이익을 위해 앞장서서 이바지합니다. 모두가 소외됨 없이 화기애애하게 어울릴 수 있도록 환경을 조성하는 따뜻한 조력자입니다.`,
+                values: `• 화합과 협력의 관계 (Harmony & Cooperation)\n• 타인에 대한 실질적 봉사와 배려 (Support & Kindness)\n• 신뢰할 수 있는 안정적 공동체 (Community & Order)`,
+                likes: [
+                    '따뜻한 인정과 칭찬의 표현',
+                    '모두가 함께 웃을 수 있는 친목 모임',
+                    '타인에게 실질적인 도움을 나누는 행동',
+                    '체계적이고 다정한 조직 분위기'
+                ],
+                dislikes: [
+                    '차가운 비판이나 냉소적인 태도',
+                    '갈등을 조장하거나 남을 모함하는 행동',
+                    '자신의 호의를 당연한 듯 무시하는 상대',
+                    '비협조적이고 독단적으로 행동하는 태도'
+                ],
+                comm: `ESFJ의 세심한 노력을 바르게 알아주고 다정한 어조로 감사를 표현해 주세요. 그들의 노고를 공감해 주는 한마디가 관계를 더욱 깊게 만듭니다.`,
+                strengths: ['따뜻한 친화력', '뛰어난 협동심', '세심한 보살핌', '강한 책임감']
+            },
+            'ENFJ': {
+                title: '사람의 잠재력을 이끄는 정의로운 주인공',
+                subtitle: '카리스마와 깊은 공감 능력으로 대중을 자극하고 선한 변화를 이끕니다.',
+                desc: `ENFJ는 진정성 있는 카리스마와 뛰어난 언변으로 사람들의 마음을 움직이는 이상적인 리더입니다. 타인의 잠재력을 알아보고 이를 이끌어내는 것에 큰 보람을 느낍니다.
+공감 능력이 탁월하면서도 조직을 원활히 이끄는 결단력을 겸비하고 있습니다. 공동체의 선한 목표를 위해 타인을 설득하고 진심 어린 연대를 이끌어내는 인망 높은 지도자입니다.`,
+                values: `• 공동체의 선한 성장 (Growth & Human Potential)\n• 깊은 연대감과 공감 (Empathy & Unity)\n• 진정성 있는 영향력 (Inspirational Leadership)`,
+                likes: [
+                    '타인의 성장을 돕고 용기를 주는 순간',
+                    '공동의 비전을 위해 협력하는 프로젝트',
+                    '진솔하고 따뜻한 영감을 나누는 대화',
+                    '사람들의 긍정적인 변화와 호응'
+                ],
+                dislikes: [
+                    '이기적이고 남을 짓밟는 경쟁적 태도',
+                    '타인의 진심이나 가능성을 냉소적으로 비웃는 행동',
+                    '약자를 배려하지 않는 불공정한 상황',
+                    '소통을 거부하고 마음에 벽을 치는 행동'
+                ],
+                comm: `ENFJ에게는 진심 어린 신뢰와 함께 공동의 목표에 대한 열정을 보여주세요. 그들의 헌신에 깊은 공감을 표할 때 최고의 협력자로 나아갑니다.`,
+                strengths: ['카리스마 리더십', '사람을 키우는 능력', '탁월한 언변', '깊은 공감력']
+            },
+            'ENTJ': {
+                title: '비전을 실현하는 대담한 통솔자',
+                subtitle: '명철한 분석과 단호한 결단력으로 커다란 목표를 향해 조직을 완벽히 이끕니다.',
+                desc: `ENTJ는 거대한 비전을 설정하고 이를 장기적 전략으로 풀어내는 타고난 통솔자입니다. 비효율성과 비합리성을 용납하지 않으며, 단호한 결단력으로 수많은 장애물을 돌파합니다.
+지적 자극을 즐기며 당면한 과제에 비전을 갖고 과감하게 도전합니다. 명확한 목표의식과 자기 확신을 통해 조직 전체에 나아갈 길을 확실하게 제시하는 진취적인 리더입니다.`,
+                values: `• 대담한 비전과 성취 (Vision & Achievement)\n• 철저한 효율성과 능력주의 (Efficiency & Competence)\n• 과감한 도전과 주도권 (Leadership & Challenge)`,
+                likes: [
+                    '어려운 과제를 도전하여 완벽하게 성취하는 것',
+                    '능력 있는 동료들과의 치밀한 전략 기획',
+                    '단호하고 신속한 의사결정과 실행',
+                    '전체적인 시스템의 효율화'
+                ],
+                dislikes: [
+                    '우유부단하고 비효율적인 행동',
+                    '감정에 휘둘려 목표를 망치는 비합리성',
+                    '변화나 발전을 거부하는 안일한 태도',
+                    '지시나 목표의 방향성이 모호한 상태'
+                ],
+                comm: `ENTJ에게는 주저함 없이 결론과 핵심 전략을 명쾌하고 자신감 있게 제시하세요. 능력과 성과로 스스로를 증명할 때 깊은 존중을 얻습니다.`,
+                strengths: ['비전 수립', '강한 추진력', '단호한 결단력', '전략적 조직 운영']
+            }
+        };
+
+        // STATE VARIABLES
+        let currentIndex = 0;
+        let answers = [];
+
+        // DOM ELEMENTS
+        const landingScreen = document.getElementById('landing-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const loadingScreen = document.getElementById('loading-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        const currentQNum = document.getElementById('current-q-num');
+        const progressBar = document.getElementById('progress-bar');
+        const questionCategory = document.getElementById('question-category');
+        const questionText = document.getElementById('question-text');
+        const optionAText = document.getElementById('option-a-text');
+        const optionBText = document.getElementById('option-b-text');
+        const prevBtn = document.getElementById('prev-btn');
+
+        // FUNCTIONS
+        function startQuiz() {
+            currentIndex = 0;
+            answers = [];
+            landingScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            currentQNum.textContent = currentIndex + 1;
+            
+            // Progress Bar Update
+            const progressPercent = ((currentIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            // Text Update
+            questionCategory.textContent = `${q.category} (${q.type})`;
+            questionText.textContent = q.question;
+            optionAText.textContent = q.a;
+            optionBText.textContent = q.b;
+
+            // Prev Button State
+            prevBtn.disabled = currentIndex === 0;
+
+            // Animation reset
+            const qBox = document.getElementById('question-box');
+            qBox.classList.remove('fade-in');
+            void qBox.offsetWidth;
+            qBox.classList.add('fade-in');
+        }
+
+        function selectOption(choice) {
+            answers[currentIndex] = choice;
+
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                showLoadingAndCalculate();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function showLoadingAndCalculate() {
+            questionScreen.classList.add('hidden');
+            loadingScreen.classList.remove('hidden');
+
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                calculateResult();
+                resultScreen.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1200);
+        }
+
+        function calculateResult() {
+            let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+            answers.forEach((ans, idx) => {
+                const q = questions[idx];
+                if (q.type === 'EI') {
+                    if (ans === 'A') scores.E++;
+                    else scores.I++;
+                } else if (q.type === 'SN') {
+                    if (ans === 'A') scores.S++;
+                    else scores.N++;
+                } else if (q.type === 'TF') {
+                    if (ans === 'A') scores.T++;
+                    else scores.F++;
+                } else if (q.type === 'JP') {
+                    if (ans === 'A') scores.J++;
+                    else scores.P++;
+                }
+            });
+
+            const totalPerType = 5; // 5 questions each
+
+            const mbti = 
+                (scores.E >= scores.I ? 'E' : 'I') +
+                (scores.S >= scores.N ? 'S' : 'N') +
+                (scores.T >= scores.F ? 'T' : 'F') +
+                (scores.J >= scores.P ? 'J' : 'P');
+
+            // Percentages
+            const ePct = Math.round((scores.E / totalPerType) * 100);
+            const iPct = 100 - ePct;
+            const sPct = Math.round((scores.S / totalPerType) * 100);
+            const nPct = 100 - sPct;
+            const tPct = Math.round((scores.T / totalPerType) * 100);
+            const fPct = 100 - tPct;
+            const jPct = Math.round((scores.J / totalPerType) * 100);
+            const pPct = 100 - jPct;
+
+            document.getElementById('score-e-label').textContent = `외향형 (E) ${ePct}%`;
+            document.getElementById('score-i-label').textContent = `내향형 (I) ${iPct}%`;
+            document.getElementById('bar-e').style.width = `${ePct}%`;
+            document.getElementById('bar-i').style.width = `${iPct}%`;
+
+            document.getElementById('score-s-label').textContent = `감각형 (S) ${sPct}%`;
+            document.getElementById('score-n-label').textContent = `직관형 (N) ${nPct}%`;
+            document.getElementById('bar-s').style.width = `${sPct}%`;
+            document.getElementById('bar-n').style.width = `${nPct}%`;
+
+            document.getElementById('score-t-label').textContent = `사고형 (T) ${tPct}%`;
+            document.getElementById('score-f-label').textContent = `감정이입형 (F) ${fPct}%`;
+            document.getElementById('bar-t').style.width = `${tPct}%`;
+            document.getElementById('bar-f').style.width = `${fPct}%`;
+
+            document.getElementById('score-j-label').textContent = `판단형 (J) ${jPct}%`;
+            document.getElementById('score-p-label').textContent = `인식형 (P) ${pPct}%`;
+            document.getElementById('bar-j').style.width = `${jPct}%`;
+            document.getElementById('bar-p').style.width = `${pPct}%`;
+
+            // Populate Detailed Result Data
+            const data = mbtiResults[mbti] || mbtiResults['ENFP'];
+
+            document.getElementById('result-mbti').textContent = mbti;
+            document.getElementById('result-title').textContent = data.title;
+            document.getElementById('result-subtitle').textContent = data.subtitle;
+            document.getElementById('result-desc').textContent = data.desc;
+            document.getElementById('result-values').textContent = data.values;
+            document.getElementById('result-comm').textContent = data.comm;
+
+            // Likes
+            const likesUl = document.getElementById('result-likes');
+            likesUl.innerHTML = '';
+            data.likes.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                likesUl.appendChild(li);
+            });
+
+            // Dislikes
+            const dislikesUl = document.getElementById('result-dislikes');
+            dislikesUl.innerHTML = '';
+            data.dislikes.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                dislikesUl.appendChild(li);
+            });
+
+            // Strengths Badges
+            const strengthsContainer = document.getElementById('result-strengths');
+            strengthsContainer.innerHTML = '';
+            data.strengths.forEach(st => {
+                const badge = document.createElement('span');
+                badge.className = 'px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-semibold border border-indigo-500/30';
+                badge.textContent = `# ${st}`;
+                strengthsContainer.appendChild(badge);
+            });
+        }
+
+        function restartQuiz() {
+            resultScreen.classList.add('hidden');
+            landingScreen.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
